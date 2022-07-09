@@ -1,25 +1,46 @@
-export const PizzaBlock = ({ title }) => {
+import React from 'react';
+
+export const PizzaBlock = ({ title, img, price, types, sizes }) => {
+  const [activeType, setActiveType] = React.useState(0);
+  const [activeSize, setActiveSize] = React.useState(0);
+  const typeNames = ['тонкое', 'традиционное'];
+
+  const changeType = (type) => {
+    setActiveType(type);
+  };
+
+  const changeSize = (idx) => {
+    setActiveSize(idx);
+  };
+
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={img} alt={title} />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {types.map((type) => (
+            <li
+              key={type}
+              className={type === activeType || types.length === 1 ? 'active' : undefined}
+              onClick={() => changeType(type)}>
+              {typeNames[type]}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizes.map((size, i) => (
+            <li
+              key={size}
+              className={activeSize === i ? 'active' : undefined}
+              onClick={() => changeSize(i)}>
+              {size} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от 395 ₽</div>
+        <div className="pizza-block__price">от {price} ₽</div>
         <div className="button button--outline button--add">
           <svg
             width="12"
