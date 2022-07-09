@@ -1,13 +1,25 @@
+import React from 'react';
+
+const cats = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+
 export const Categories = () => {
+  const [category, setCategory] = React.useState(cats[0]);
+
+  const changeCategory = (cat) => {
+    setCategory(cat);
+  };
+
   return (
     <div className="categories">
       <ul>
-        <li className="active">Все</li>
-        <li>Мясные</li>
-        <li>Вегетарианская</li>
-        <li>Гриль</li>
-        <li>Острые</li>
-        <li>Закрытые</li>
+        {cats.map((el, idx) => (
+          <li
+            key={idx}
+            className={category === el ? 'active' : undefined}
+            onClick={() => changeCategory(el)}>
+            {el}
+          </li>
+        ))}
       </ul>
     </div>
   );

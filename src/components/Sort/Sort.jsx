@@ -38,10 +38,13 @@ export const Sort = () => {
           {sortStatus}
         </button>
       </div>
-      <div className={`sort__popup ${showSort && 'active'}`} ref={sortPopup}>
+      <div className={`sort__popup ${showSort ? 'active' : undefined}`} ref={sortPopup}>
         <ul>
-          {sortArr.map((el) => (
-            <li className={el === sortStatus && 'active'} onClick={() => changeSort(el)}>
+          {sortArr.map((el, idx) => (
+            <li
+              key={idx}
+              className={el === sortStatus ? 'active' : undefined}
+              onClick={() => changeSort(el)}>
               {el}
             </li>
           ))}
