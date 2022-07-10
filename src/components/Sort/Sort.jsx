@@ -5,18 +5,16 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 const sortArr = ['популярности', 'цене', 'алфавиту'];
 
 export const Sort = () => {
-  const [showSort, setShowSort] = React.useState(false);
-  const [sortStatus, setSortStatus] = React.useState(sortArr[0]);
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState(0);
   const sortPopup = React.useRef(null);
-  useOnClickOutside(sortPopup, () => setShowSort(false));
+  const sortName = sortArr[selected];
 
-  const switchMode = () => {
-    setShowSort((prev) => !prev);
-  };
+  useOnClickOutside(sortPopup, () => setOpen(false));
 
-  const changeSort = (sort) => {
-    setSortStatus(sort);
-    setShowSort(false);
+  const changeSort = (i) => {
+    setSelected(i);
+    setOpen(false);
   };
 
   return (
@@ -34,17 +32,17 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <button id="switchMode" type="button" onClick={switchMode}>
-          {sortStatus}
+        <button id="switchMode" type="button" onClick={() => setOpen(!open)}>
+          {sortName}
         </button>
       </div>
-      <div className={`sort__popup ${showSort ? 'active' : undefined}`} ref={sortPopup}>
+      <div className={`sort__popup ${open ? 'active' : undefined}`} ref={sortPopup}>
         <ul>
-          {sortArr.map((el, idx) => (
+          {sortArr.map((el, i) => (
             <li
-              key={idx}
-              className={el === sortStatus ? 'active' : undefined}
-              onClick={() => changeSort(el)}>
+              key={i}
+              className={i === selected ? 'active' : undefined}
+              onClick={() => changeSort(i)}>
               {el}
             </li>
           ))}

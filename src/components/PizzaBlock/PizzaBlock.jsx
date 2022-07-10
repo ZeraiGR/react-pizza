@@ -5,14 +5,6 @@ export const PizzaBlock = ({ title, img, price, types, sizes }) => {
   const [activeSize, setActiveSize] = React.useState(0);
   const typeNames = ['тонкое', 'традиционное'];
 
-  const changeType = (type) => {
-    setActiveType(type);
-  };
-
-  const changeSize = (idx) => {
-    setActiveSize(idx);
-  };
-
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={img} alt={title} />
@@ -23,7 +15,7 @@ export const PizzaBlock = ({ title, img, price, types, sizes }) => {
             <li
               key={type}
               className={type === activeType || types.length === 1 ? 'active' : undefined}
-              onClick={() => changeType(type)}>
+              onClick={() => setActiveType(type)}>
               {typeNames[type]}
             </li>
           ))}
@@ -33,7 +25,7 @@ export const PizzaBlock = ({ title, img, price, types, sizes }) => {
             <li
               key={size}
               className={activeSize === i ? 'active' : undefined}
-              onClick={() => changeSize(i)}>
+              onClick={() => setActiveSize(i)}>
               {size} см.
             </li>
           ))}
