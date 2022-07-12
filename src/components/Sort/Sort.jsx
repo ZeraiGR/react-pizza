@@ -2,18 +2,14 @@ import React from 'react';
 
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 
-const sortArr = ['популярности', 'цене', 'алфавиту'];
-
-export const Sort = () => {
+export const Sort = ({ sortArr, sort, setSort }) => {
   const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState(0);
   const sortPopup = React.useRef(null);
-  const sortName = sortArr[selected];
 
   useOnClickOutside(sortPopup, () => setOpen(false));
 
-  const changeSort = (i) => {
-    setSelected(i);
+  const changeSort = (newSort) => {
+    setSort(newSort);
     setOpen(false);
   };
 
@@ -33,7 +29,7 @@ export const Sort = () => {
         </svg>
         <b>Сортировка по:</b>
         <button id="switchMode" type="button" onClick={() => setOpen(!open)}>
-          {sortName}
+          {sort}
         </button>
       </div>
       <div className={`sort__popup ${open ? 'active' : undefined}`} ref={sortPopup}>
@@ -41,8 +37,8 @@ export const Sort = () => {
           {sortArr.map((el, i) => (
             <li
               key={i}
-              className={i === selected ? 'active' : undefined}
-              onClick={() => changeSort(i)}>
+              className={el === sort ? 'active' : undefined}
+              onClick={() => changeSort(el)}>
               {el}
             </li>
           ))}
