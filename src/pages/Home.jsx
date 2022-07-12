@@ -1,96 +1,50 @@
 import React from 'react';
+import { API } from '../api/api';
 
 import { Categories } from '../components/Categories/Categories';
 import { Sort } from '../components/Sort/Sort';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
 
-// Filter helpers
-const ALL = 'Все';
-const cats = [ALL, 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
-
 // Sort helpers
-const PRICE = 'цене';
-const POPULAR = 'популярности';
-const ALPHABET = 'алфавиту';
-const sortArr = [POPULAR, PRICE, ALPHABET];
-
-const sortByAlph = (x, y) => {
-  return x.title.localeCompare(y.title);
-};
-
-const sortByPrice = (x, y) => {
-  return x.price - y.price;
-};
-
-const sortByRate = (x, y) => {
-  return y.rating - x.rating;
-};
-// --------------------------------
+const sortList = [
+  { name: 'цене (возрастающая)', sortProp: 'price' },
+  { name: 'цене (убывающая)', sortProp: '-price' },
+  { name: 'популярности', sortProp: 'rating' },
+  { name: 'алфавиту', sortProp: 'title' },
+];
 
 export const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [category, setCategory] = React.useState('Все');
-  const [sort, setSort] = React.useState(POPULAR);
+  const [categoryId, setCategoryId] = React.useState(0);
+  const [sortType, setSortType] = React.useState({ name: 'популярности', sortProp: 'rating' });
 
   React.useEffect(() => {
-    fetch('https://62cadb1a1eaf3786ebb23291.mockapi.io/items')
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-        setIsLoading(false);
-      });
     window.scrollTo(0, 0);
   }, []);
 
-  const productsSort = (items) => {
-    let sortedItems = [];
-
-    switch (sort) {
-      case ALPHABET:
-        sortedItems = items.sort(sortByAlph);
-        break;
-      case PRICE:
-        sortedItems = items.sort(sortByPrice);
-        break;
-      case POPULAR:
-        sortedItems = items.sort(sortByRate);
-        break;
-
-      default:
-        sortedItems = items;
-        break;
+  React.useEffect(() => {
+    async function loadItems() {
+      setIsLoading(true);
+      let data = await API.getItems(categoryId, sortType.sortProp);
+      setItems(data);
+      setIsLoading(false);
     }
-
-    return sortedItems;
-  };
-
-  const productsFiltrer = (items) => {
-    let filteredItems = [];
-
-    if (category === ALL) {
-      return items;
-    }
-
-    const catIndex = cats.findIndex((cat) => cat === category);
-
-    filteredItems = items.filter((item) => item.category === catIndex);
-
-    return filteredItems;
-  };
+    loadItems();
+  }, [categoryId, sortType]);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories category={category} setCategory={setCategory} cats={cats} />
-        <Sort sortArr={sortArr} sort={sort} setSort={setSort} />
+        <Categories categoryId={categoryId} onChangeCategory={(id) => setCategoryId(id)} />
+        <Sort sortList={sortList} value={sortType} onChangeSort={(sort) => setSortType(sort)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__list-items">
         {isLoading
           ? [...new Array(8)].map((_, i) => <PizzaSkelet key={i} className="pizza-block" />)
-          : productsSort(productsFiltrer(items)).map((item) => (
+          : items.map((item) => (
               <PizzaBlock
                 key={item.id}
                 img={item.imageUrl}

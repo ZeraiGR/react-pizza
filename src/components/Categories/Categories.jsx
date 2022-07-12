@@ -1,19 +1,17 @@
 import React from 'react';
 
-export const Categories = ({ category, setCategory, cats }) => {
-  const changeCategory = (cat) => {
-    setCategory(cat);
-  };
+const cats = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
+export const Categories = ({ categoryId, onChangeCategory }) => {
   return (
     <div className="categories">
       <ul>
-        {cats.map((el, idx) => (
+        {cats.map((cat, idx) => (
           <li
             key={idx}
-            className={category === el ? 'active' : undefined}
-            onClick={() => changeCategory(el)}>
-            {el}
+            className={categoryId === idx ? 'active' : undefined}
+            onClick={() => onChangeCategory(idx)}>
+            {cat}
           </li>
         ))}
       </ul>
