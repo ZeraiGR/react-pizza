@@ -8,6 +8,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 630px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   &__logo {
@@ -20,7 +25,6 @@
     h1 {
       color: #181818;
       font-size: 24px;
-      letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
     }
@@ -28,5 +32,13 @@
     p {
       color: #7b7b7b;
     }
+
+    @media (max-width: 768px) {
+      margin-bottom: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 25px 0;
   }
 }

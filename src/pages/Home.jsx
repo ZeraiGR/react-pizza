@@ -8,6 +8,7 @@ import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
 export const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [category, setCategory] = React.useState([]);
 
   React.useEffect(() => {
     fetch('https://62cadb1a1eaf3786ebb23291.mockapi.io/items')
@@ -16,6 +17,7 @@ export const Home = () => {
         setItems(data);
         setIsLoading(false);
       });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -25,7 +27,7 @@ export const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
+      <div className="content__list-items">
         {isLoading
           ? [...new Array(8)].map(() => <PizzaSkelet className="pizza-block" />)
           : items.map((item) => (

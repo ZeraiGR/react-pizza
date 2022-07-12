@@ -2,6 +2,7 @@
 
 .sort {
   position: relative;
+
   &__label {
     display: flex;
     align-items: center;
@@ -12,6 +13,11 @@
 
     b {
       margin-right: 8px;
+      white-space: nowrap;
+
+      @media (max-width: 992px) {
+        display: none;
+      }
     }
 
     button {
@@ -58,6 +64,11 @@
           color: $orange;
         }
       }
+    }
+
+    @media (max-width: 768px) {
+      right: auto;
+      left: 0;
     }
   }
 }

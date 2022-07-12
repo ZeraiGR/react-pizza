@@ -3,7 +3,7 @@ import React from 'react';
 const cats = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
 export const Categories = () => {
-  const [category, setCategory] = React.useState(cats[0]);
+  const [category, setCategory] = React.useState('Все');
 
   const changeCategory = (cat) => {
     setCategory(cat);
