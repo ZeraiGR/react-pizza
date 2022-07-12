@@ -5,8 +5,11 @@ import { Sort } from '../components/Sort/Sort';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
 
-const cats = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+// Filter helpers
+const ALL = 'Все';
+const cats = [ALL, 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
+// Sort helpers
 const PRICE = 'цене';
 const POPULAR = 'популярности';
 const ALPHABET = 'алфавиту';
@@ -23,6 +26,7 @@ const sortByPrice = (x, y) => {
 const sortByRate = (x, y) => {
   return y.rating - x.rating;
 };
+// --------------------------------
 
 export const Home = () => {
   const [items, setItems] = React.useState([]);
@@ -65,7 +69,15 @@ export const Home = () => {
   const productsFiltrer = (items) => {
     let filteredItems = [];
 
-    return items;
+    if (category === ALL) {
+      return items;
+    }
+
+    const catIndex = cats.findIndex((cat) => cat === category);
+
+    filteredItems = items.filter((item) => item.category === catIndex);
+
+    return filteredItems;
   };
 
   return (
