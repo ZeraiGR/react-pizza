@@ -6,6 +6,7 @@ import { Sort } from '../components/Sort/Sort';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
 import { Pagination } from '../components/common/Pagination';
+import { StoreContext } from '../App';
 
 // Sort helpers
 const sortList = [
@@ -15,7 +16,7 @@ const sortList = [
   { name: 'алфавиту', sortProp: 'title' },
 ];
 
-export const Home = ({ search }) => {
+export const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -24,6 +25,8 @@ export const Home = ({ search }) => {
   const [page, setPage] = React.useState(1);
 
   const [sortType, setSortType] = React.useState({ name: 'популярности', sortProp: 'rating' });
+
+  const { search } = React.useContext(StoreContext);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
