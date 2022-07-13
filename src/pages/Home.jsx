@@ -14,7 +14,7 @@ const sortList = [
   { name: 'алфавиту', sortProp: 'title' },
 ];
 
-export const Home = () => {
+export const Home = ({ search }) => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -27,12 +27,12 @@ export const Home = () => {
   React.useEffect(() => {
     async function loadItems() {
       setIsLoading(true);
-      let data = await API.getItems(categoryId, sortType.sortProp);
+      let data = await API.getItems(categoryId, sortType.sortProp, search);
       setItems(data);
       setIsLoading(false);
     }
     loadItems();
-  }, [categoryId, sortType]);
+  }, [categoryId, sortType, search]);
 
   return (
     <div className="container">

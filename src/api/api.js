@@ -5,11 +5,14 @@ const instance = axios.create({
 });
 
 export const API = {
-  getItems(categoryId = 0, sort) {
+  getItems(categoryId = 0, sort, search) {
     const sortBy = sort.replace('-', '');
     const order = sort.includes('-') ? 'desc' : 'asc';
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
+    const searching = search ? `&search=${search}` : '';
 
-    return instance.get(`items?sortBy=${sortBy}&order=${order}${category}`).then((res) => res.data);
+    return instance
+      .get(`items?sortBy=${sortBy}&order=${order}${category}${searching}`)
+      .then((res) => res.data);
   },
 };
