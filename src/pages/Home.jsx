@@ -1,10 +1,11 @@
 import React from 'react';
-import { API } from '../api/api';
 
+import { API } from '../api/api';
 import { Categories } from '../components/Categories/Categories';
 import { Sort } from '../components/Sort/Sort';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
+import { Pagination } from '../components/common/Pagination';
 
 // Sort helpers
 const sortList = [
@@ -18,6 +19,10 @@ export const Home = ({ search }) => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
+  const [total, setTotal] = React.useState(0);
+  const [limit, setLimit] = React.useState(4);
+  const [page, setPage] = React.useState(1);
+
   const [sortType, setSortType] = React.useState({ name: 'популярности', sortProp: 'rating' });
 
   React.useEffect(() => {
@@ -27,12 +32,13 @@ export const Home = ({ search }) => {
   React.useEffect(() => {
     async function loadItems() {
       setIsLoading(true);
-      let data = await API.getItems(categoryId, sortType.sortProp, search);
-      setItems(data);
+      let data = await API.getItems(categoryId, sortType.sortProp, search, page, limit);
+      setItems(data.items);
+      setTotal(data.count);
       setIsLoading(false);
     }
     loadItems();
-  }, [categoryId, sortType, search]);
+  }, [categoryId, sortType, search, page]);
 
   return (
     <div className="container">
@@ -55,6 +61,7 @@ export const Home = ({ search }) => {
               />
             ))}
       </div>
+      <Pagination limit={limit} total={total} setPage={setPage} />
     </div>
   );
 };

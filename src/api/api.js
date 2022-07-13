@@ -5,14 +5,15 @@ const instance = axios.create({
 });
 
 export const API = {
-  getItems(categoryId = 0, sort, search) {
+  getItems(categoryId = 0, sort, search, page, limit) {
     const sortBy = sort.replace('-', '');
     const order = sort.includes('-') ? 'desc' : 'asc';
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
     const searching = search ? `&search=${search}` : '';
+    const pagination = `&page=${page}&limit=${limit}`;
 
     return instance
-      .get(`items?sortBy=${sortBy}&order=${order}${category}${searching}`)
+      .get(`items?sortBy=${sortBy}&order=${order}${category}${searching}${pagination}`)
       .then((res) => res.data);
   },
 };

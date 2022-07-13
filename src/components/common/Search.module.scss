@@ -1,6 +1,18 @@
 .root {
   position: relative;
-  margin-right: auto;
+  margin-right: 20px;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+  }
+
+  @media (max-width: 630px) {
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
 }
 
 .searchIcon,
@@ -24,6 +36,7 @@
 
 .input {
   padding: 12px 24px 12px 44px;
+  width: 100%;
   border: 1px solid #fe5d1e58;
   border-radius: 8px;
   outline: transparent;
