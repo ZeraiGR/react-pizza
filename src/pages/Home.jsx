@@ -28,14 +28,12 @@ export const Home = () => {
     async function loadItems() {
       setIsLoading(true);
       const data = await API.getItems(categoryId, sortType, search, page, limit);
-      console.log(data);
       setItems(data.items);
       dispatch(setTotal(data.count));
       setIsLoading(false);
     }
     loadItems();
   }, [categoryId, sortType, search, page]);
-  console.log(items);
 
   return (
     <div className="container">
