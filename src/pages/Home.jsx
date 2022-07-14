@@ -1,32 +1,24 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { API } from '../api/api';
 import { Categories } from '../components/Categories/Categories';
 import { Sort } from '../components/Sort/Sort';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
 import { Pagination } from '../components/common/Pagination';
-import { StoreContext } from '../App';
 
-// Sort helpers
-const sortList = [
-  { name: 'цене (возрастающая)', sortProp: 'price' },
-  { name: 'цене (убывающая)', sortProp: '-price' },
-  { name: 'популярности', sortProp: 'rating' },
-  { name: 'алфавиту', sortProp: 'title' },
-];
+import { setTotal } from '../redux/slices/productSlice';
+import { API } from '../api/api';
 
 export const Home = () => {
-  const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
-  const [total, setTotal] = React.useState(0);
-  const [limit, setLimit] = React.useState(4);
-  const [page, setPage] = React.useState(1);
+  const [items, setItems] = React.useState([]);
+  const dispatch = useDispatch();
 
-  const [sortType, setSortType] = React.useState({ name: 'популярности', sortProp: 'rating' });
+  const { categoryId, sort, search } = useSelector((state) => state.filter);
+  const { page, limit } = useSelector((state) => state.product);
 
-  const { search } = React.useContext(StoreContext);
+  const sortType = sort.sortProp;
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,19 +27,21 @@ export const Home = () => {
   React.useEffect(() => {
     async function loadItems() {
       setIsLoading(true);
-      let data = await API.getItems(categoryId, sortType.sortProp, search, page, limit);
+      const data = await API.getItems(categoryId, sortType, search, page, limit);
+      console.log(data);
       setItems(data.items);
-      setTotal(data.count);
+      dispatch(setTotal(data.count));
       setIsLoading(false);
     }
     loadItems();
   }, [categoryId, sortType, search, page]);
+  console.log(items);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories categoryId={categoryId} onChangeCategory={(id) => setCategoryId(id)} />
-        <Sort sortList={sortList} value={sortType} onChangeSort={(sort) => setSortType(sort)} />
+        <Categories />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__list-items">
@@ -64,7 +58,7 @@ export const Home = () => {
               />
             ))}
       </div>
-      <Pagination limit={limit} total={total} setPage={setPage} />
+      <Pagination />
     </div>
   );
 };

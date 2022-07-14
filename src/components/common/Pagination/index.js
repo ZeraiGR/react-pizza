@@ -1,9 +1,18 @@
 import ReactPaginate from 'react-paginate';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { setPage } from '../../../redux/slices/productSlice';
 import styles from './Pagination.module.scss';
 
-export const Pagination = ({ limit, total, setPage }) => {
+export const Pagination = () => {
+  const { total, limit } = useSelector((state) => state.product);
   const pages = Math.ceil(total / limit);
+
+  const dispatch = useDispatch();
+
+  const changePage = (page) => {
+    dispatch(setPage(page));
+  };
 
   return (
     <>
@@ -11,7 +20,7 @@ export const Pagination = ({ limit, total, setPage }) => {
         className={styles.root}
         breakLabel="..."
         nextLabel=">"
-        onPageChange={(e) => setPage(e.selected + 1)}
+        onPageChange={(e) => changePage(e.selected + 1)}
         pageRangeDisplayed={limit}
         pageCount={pages}
         previousLabel="<"

@@ -1,15 +1,26 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { setSort } from '../../redux/slices/filterSlice';
 
-export const Sort = ({ sortList, value, onChangeSort }) => {
+const sortList = [
+  { name: 'цене (возрастающая)', sortProp: 'price' },
+  { name: 'цене (убывающая)', sortProp: '-price' },
+  { name: 'популярности', sortProp: 'rating' },
+  { name: 'алфавиту', sortProp: 'title' },
+];
+
+export const Sort = () => {
   const [open, setOpen] = React.useState(false);
   const sortPopup = React.useRef(null);
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filter.sort);
 
   useOnClickOutside(sortPopup, () => setOpen(false));
 
-  const changeSort = (newSortObj) => {
-    onChangeSort(newSortObj);
+  const changeSort = (obj) => {
+    dispatch(setSort(obj));
     setOpen(false);
   };
 
@@ -29,7 +40,7 @@ export const Sort = ({ sortList, value, onChangeSort }) => {
         </svg>
         <b>Сортировка по:</b>
         <button id="switchMode" type="button" onClick={() => setOpen(!open)}>
-          {value.name}
+          {sort.name}
         </button>
       </div>
       <div className={`sort__popup ${open ? 'active' : undefined}`} ref={sortPopup}>
@@ -37,7 +48,7 @@ export const Sort = ({ sortList, value, onChangeSort }) => {
           {sortList.map((obj, i) => (
             <li
               key={i}
-              className={obj.name === value.name ? 'active' : undefined}
+              className={obj.name === sort.name ? 'active' : undefined}
               onClick={() => changeSort(obj)}>
               {obj.name}
             </li>
