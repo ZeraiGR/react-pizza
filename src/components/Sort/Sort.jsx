@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { setSort } from '../../redux/slices/filterSlice';
 
-const sortList = [
+export const sortList = [
   { name: 'цене (возрастающая)', sortProp: 'price' },
   { name: 'цене (убывающая)', sortProp: '-price' },
-  { name: 'популярности', sortProp: 'rating' },
+  { name: 'популярности', sortProp: '-rating' },
   { name: 'алфавиту', sortProp: 'title' },
 ];
 
-export const Sort = () => {
+export const Sort = React.memo(() => {
   const [open, setOpen] = React.useState(false);
   const sortPopup = React.useRef(null);
   const dispatch = useDispatch();
@@ -57,4 +57,4 @@ export const Sort = () => {
       </div>
     </div>
   );
-};
+});

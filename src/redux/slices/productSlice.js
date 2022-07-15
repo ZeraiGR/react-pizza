@@ -4,7 +4,6 @@ const initialState = {
   items: [],
   total: 0,
   limit: 4,
-  page: 1,
 };
 
 export const productSlice = createSlice({
@@ -14,12 +13,9 @@ export const productSlice = createSlice({
     setTotal(state, action) {
       state.total = action.payload;
     },
-    setPage(state, action) {
-      state.page = action.payload;
-    },
   },
 });
 
-export const { setTotal, setPage } = productSlice.actions;
+export const { setTotal } = productSlice.actions;
 
 export default productSlice.reducer;
