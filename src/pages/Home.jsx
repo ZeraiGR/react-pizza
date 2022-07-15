@@ -95,6 +95,7 @@ export const Home = () => {
           : items.map((item) => (
               <PizzaBlock
                 key={item.id}
+                id={item.id}
                 img={item.imageUrl}
                 title={item.title}
                 price={item.price}
