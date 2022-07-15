@@ -9,10 +9,10 @@ import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
 import { Pagination } from '../components/common/Pagination';
 import { sortList } from '../components/Sort/Sort';
+import { ErrorProducts } from '../components/NotFoundBlock/ErrorProducts';
 
-import { setTotal } from '../redux/slices/productSlice';
+import { fetchItems } from '../redux/slices/productSlice';
 import { setFilters } from '../redux/slices/filterSlice';
-import { API } from '../api/api';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -21,21 +21,10 @@ export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-
   const { categoryId, sort, search, page } = useSelector((state) => state.filter);
-  const { limit } = useSelector((state) => state.product);
+  const { limit, items, status } = useSelector((state) => state.product);
 
   const sortType = sort.sortProp;
-
-  const fetchPizzas = async () => {
-    setIsLoading(true);
-    const data = await API.getItems(categoryId, sortType, search, page, limit);
-    setItems(data.items);
-    dispatch(setTotal(data.count));
-    setIsLoading(false);
-  };
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -76,7 +65,15 @@ export const Home = () => {
   React.useEffect(() => {
     if (!isSearch.current) {
       console.log(' запрос за пиццами!');
-      fetchPizzas();
+      dispatch(
+        fetchItems({
+          categoryId,
+          sortType,
+          search,
+          page,
+          limit,
+        }),
+      );
     }
 
     isSearch.current = false;
@@ -88,23 +85,30 @@ export const Home = () => {
         <Categories />
         <Sort />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
-      <div className="content__list-items">
-        {isLoading
-          ? [...new Array(8)].map((_, i) => <PizzaSkelet key={i} className="pizza-block" />)
-          : items.map((item) => (
-              <PizzaBlock
-                key={item.id}
-                id={item.id}
-                img={item.imageUrl}
-                title={item.title}
-                price={item.price}
-                types={item.types}
-                sizes={item.sizes}
-              />
-            ))}
-      </div>
-      <Pagination />
+      {status === 'error' ? (
+        <ErrorProducts />
+      ) : (
+        <>
+          <h2 className="content__title">Все пиццы</h2>
+          <div className="content__list-items">
+            {status === 'loading' &&
+              [...new Array(8)].map((_, i) => <PizzaSkelet key={i} className="pizza-block" />)}
+            {status === 'success' &&
+              items.map((item) => (
+                <PizzaBlock
+                  key={item.id}
+                  id={item.id}
+                  img={item.imageUrl}
+                  title={item.title}
+                  price={item.price}
+                  types={item.types}
+                  sizes={item.sizes}
+                />
+              ))}
+          </div>
+          <Pagination />
+        </>
+      )}
     </div>
   );
 };
