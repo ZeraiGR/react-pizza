@@ -16,4 +16,7 @@ export const API = {
       .get(`items?sortBy=${sortBy}&order=${order}${category}${searching}${pagination}`)
       .then((res) => res.data);
   },
+  getItem(id) {
+    return instance.get(`items/${id}`).then((res) => res.data);
+  },
 };

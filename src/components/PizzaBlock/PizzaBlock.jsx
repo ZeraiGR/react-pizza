@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { Link } from 'react-router-dom';
 
 import { add } from '../../redux/slices/cartSlice';
-import { getCurrentItem } from '../../redux/selectors/cartSelectors';
+import { selectCartItem } from '../../redux/selectors/cartSelectors';
 const typeNames = ['тонкое', 'традиционное'];
 
 export const PizzaBlock = ({ id, title, img, price, types, sizes }) => {
@@ -10,7 +11,7 @@ export const PizzaBlock = ({ id, title, img, price, types, sizes }) => {
   const [activeSize, setActiveSize] = React.useState(0);
 
   const dispatch = useDispatch();
-  const item = useSelector(getCurrentItem(id));
+  const item = useSelector(selectCartItem(id));
   const counter = item ? item.counter : 0;
 
   const onAddToCart = () => {
@@ -28,7 +29,9 @@ export const PizzaBlock = ({ id, title, img, price, types, sizes }) => {
 
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={img} alt={title} />
+      <Link to={'pizzas/' + id}>
+        <img className="pizza-block__image" src={img} alt={title} />
+      </Link>
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>

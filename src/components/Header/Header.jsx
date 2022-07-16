@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Search } from '../common/Search/Search';
 import { useSelector } from 'react-redux/es/exports';
-import { getTotalPrice, getTotalItems } from '../../redux/selectors/cartSelectors';
+import { selectTotalPrice, selectTotalCartItems } from '../../redux/selectors/cartSelectors';
 
 import logo from '../../assets/img/pizza-logo.svg';
 
 export const Header = () => {
-  const totalPrice = useSelector(getTotalPrice);
-  const totalItems = useSelector(getTotalItems);
+  const totalPrice = useSelector(selectTotalPrice);
+  const totalItems = useSelector(selectTotalCartItems);
 
   return (
     <header className="header">

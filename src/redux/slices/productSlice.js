@@ -14,6 +14,11 @@ export const fetchItems = createAsyncThunk('product/fetchItems', async (params) 
   return data;
 });
 
+export const fetchItem = createAsyncThunk('product/fetchItem', async (id) => {
+  const data = await API.getItem(id);
+  return data;
+});
+
 export const productSlice = createSlice({
   name: 'product',
   initialState,

@@ -2,22 +2,21 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { Home } from './pages/Home';
-import { Header } from './components/Header/Header';
 import { NotFound } from './pages/NotFound';
 import { Cart } from './pages/Cart';
+import { DefaultLayout } from './layouts/DefaultLayout';
+import { SIngleProduct } from './pages/SIngleProduct';
 
 function App() {
   return (
-    <div className="wrapper">
-      <Header />
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<DefaultLayout />}>
+        <Route index element={<Home />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="pizzas/:id" element={<SIngleProduct />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }
 

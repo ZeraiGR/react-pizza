@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 
 import { remove, plus, minus } from '../../redux/slices/cartSlice';
-import { getCurrentItemPrice } from '../../redux/selectors/cartSelectors';
+import { selectCartItemPrice } from '../../redux/selectors/cartSelectors';
 import { Minmax } from './MinMax/Minmax';
 
 export const CartItem = ({ id, title, img, type, size, counter }) => {
   const dispatch = useDispatch();
-  const price = useSelector(getCurrentItemPrice(id));
+  const price = useSelector(selectCartItemPrice(id));
 
   const removeItem = (id) => {
     if (window.confirm('Вы действительно хотите удалить товар из корзины?')) {
