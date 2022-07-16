@@ -8,9 +8,9 @@ import { EmptyCart } from './EmptyCart';
 
 export const Cart = () => {
   const dispatch = useDispatch();
-  const items = useSelector((state) => getItems(state));
-  const totalPrice = useSelector((state) => getTotalPrice(state));
-  const totalItems = useSelector((state) => getTotalItems(state));
+  const items = useSelector(getItems);
+  const totalPrice = useSelector(getTotalPrice);
+  const totalItems = useSelector(getTotalItems);
 
   const clearCart = () => {
     if (window.confirm('Вы действительно хотите очистить корзину?')) {

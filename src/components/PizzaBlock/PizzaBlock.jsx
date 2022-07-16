@@ -10,7 +10,7 @@ export const PizzaBlock = ({ id, title, img, price, types, sizes }) => {
   const [activeSize, setActiveSize] = React.useState(0);
 
   const dispatch = useDispatch();
-  const item = useSelector((state) => getCurrentItem(state, id));
+  const item = useSelector(getCurrentItem(id));
   const counter = item ? item.counter : 0;
 
   const onAddToCart = () => {

@@ -6,8 +6,8 @@ import { getTotalPrice, getTotalItems } from '../../redux/selectors/cartSelector
 import logo from '../../assets/img/pizza-logo.svg';
 
 export const Header = () => {
-  const totalPrice = useSelector((state) => getTotalPrice(state));
-  const totalItems = useSelector((state) => getTotalItems(state));
+  const totalPrice = useSelector(getTotalPrice);
+  const totalItems = useSelector(getTotalItems);
 
   return (
     <header className="header">

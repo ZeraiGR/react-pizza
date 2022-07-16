@@ -7,7 +7,7 @@ import { Minmax } from './MinMax/Minmax';
 
 export const CartItem = ({ id, title, img, type, size, counter }) => {
   const dispatch = useDispatch();
-  const price = useSelector((state) => getCurrentItemPrice(state, id));
+  const price = useSelector(getCurrentItemPrice(id));
 
   const removeItem = (id) => {
     if (window.confirm('Вы действительно хотите удалить товар из корзины?')) {

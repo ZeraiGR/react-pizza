@@ -10,16 +10,11 @@ export const getTotalItems = (state) => {
   return state.cart.items.reduce((total, item) => total + item.counter, 0);
 };
 
-export const getCurrentItem = (state, id) => {
+export const getCurrentItem = (id) => (state) => {
   return state.cart.items.find((obj) => obj.id === id);
 };
 
-export const getCurrentItemPrice = (state, id) => {
+export const getCurrentItemPrice = (id) => (state) => {
   const currentItem = state.cart.items.find((obj) => obj.id === id);
   return currentItem.price * currentItem.counter;
-};
-
-export const getCurrentItemTotal = (state, id) => {
-  const currentItem = state.cart.items.find((obj) => obj.id === id);
-  return currentItem.counter;
 };
