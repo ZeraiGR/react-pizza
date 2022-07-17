@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader';
 
-export const PizzaSkelet = (props) => (
+export const PizzaSkelet = (props: any) => (
   <ContentLoader
     speed={2}
     width={280}

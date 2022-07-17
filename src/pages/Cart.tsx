@@ -101,7 +101,7 @@ export const Cart = () => {
           </button>
         </div>
         <div className="content__items">
-          {items.map((item) => (
+          {items.map((item: any) => (
             <CartItem
               key={item.id}
               id={item.id}

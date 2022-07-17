@@ -5,9 +5,9 @@ import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import { setSearch } from '../../../redux/slices/filterSlice';
 
-export const Search = () => {
+export const Search: React.FC = () => {
   const dispatch = useDispatch();
-  const inputRef = React.useRef(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const [value, setValue] = React.useState('');
 
   const dispatchSearch = React.useCallback(
@@ -17,7 +17,7 @@ export const Search = () => {
     [],
   );
 
-  const update = (search) => {
+  const update = (search: string) => {
     setValue(search);
     dispatchSearch(search);
   };
@@ -25,7 +25,7 @@ export const Search = () => {
   const clear = () => {
     setValue('');
     dispatchSearch('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (

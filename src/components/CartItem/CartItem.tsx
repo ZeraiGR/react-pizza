@@ -5,21 +5,30 @@ import { remove, plus, minus } from '../../redux/slices/cartSlice';
 import { selectCartItemPrice } from '../../redux/selectors/cartSelectors';
 import { Minmax } from './MinMax/Minmax';
 
-export const CartItem = ({ id, title, img, type, size, counter }) => {
+type CartItemProps = {
+  id: string;
+  title: string;
+  img: string;
+  type: string;
+  size: number;
+  counter: number;
+};
+
+export const CartItem: React.FC<CartItemProps> = ({ id, title, img, type, size, counter }) => {
   const dispatch = useDispatch();
   const price = useSelector(selectCartItemPrice(id));
 
-  const removeItem = (id) => {
+  const removeItem = (id: string) => {
     if (window.confirm('Вы действительно хотите удалить товар из корзины?')) {
       dispatch(remove(id));
     }
   };
 
-  const onPlus = (id) => {
+  const onPlus = (id: string) => {
     dispatch(plus(id));
   };
 
-  const onMinus = (id) => {
+  const onMinus = (id: string) => {
     dispatch(minus(id));
   };
 

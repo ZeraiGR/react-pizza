@@ -14,15 +14,15 @@ import { ErrorProducts } from '../components/NotFoundBlock/ErrorProducts';
 import { fetchItems } from '../redux/slices/productSlice';
 import { setFilters } from '../redux/slices/filterSlice';
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
-  const { categoryId, sort, search, page } = useSelector((state) => state.filter);
-  const { limit, items, status } = useSelector((state) => state.product);
+  const { categoryId, sort, search, page } = useSelector((state: any) => state.filter);
+  const { limit, items, status } = useSelector((state: any) => state.product);
 
   const sortType = sort.sortProp;
 
@@ -66,6 +66,7 @@ export const Home = () => {
     if (!isSearch.current) {
       console.log(' запрос за пиццами!');
       dispatch(
+        // @ts-ignore
         fetchItems({
           categoryId,
           sortType,
@@ -94,7 +95,7 @@ export const Home = () => {
             {status === 'loading' &&
               [...new Array(8)].map((_, i) => <PizzaSkelet key={i} className="pizza-block" />)}
             {status === 'success' &&
-              items.map((item) => (
+              items.map((item: any) => (
                 <PizzaBlock
                   key={item.id}
                   id={item.id}

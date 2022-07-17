@@ -2,9 +2,9 @@ import React from 'react';
 
 import style from './NotFoundBlock.module.scss';
 
-export const ErrorProducts = () => {
+export const ErrorProducts: React.FC = () => {
   return (
-    <div class={style.content}>
+    <div className={style.content}>
       <h2>
         <span>😕</span>
         Не удалось подгрузить пиццы!

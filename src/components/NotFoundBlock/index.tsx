@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 import style from './NotFoundBlock.module.scss';
 
-export const NotFoundBlock = () => {
+export const NotFoundBlock: React.FC = () => {
   return (
-    <div class="container">
-      <div class={style.content}>
+    <div className="container">
+      <div className={style.content}>
         <h2>
           <span>😕</span>
           Ничего не найдено
@@ -15,7 +15,7 @@ export const NotFoundBlock = () => {
           К сожалению, такой страницы не существует! Но вы можете вернуться на главную по ссылке
           ниже!
         </p>
-        <Link to="/" class="button button--black">
+        <Link to="/" className="button button--black">
           <span>Вернуться назад</span>
         </Link>
       </div>

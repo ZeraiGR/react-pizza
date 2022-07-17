@@ -1,17 +1,18 @@
+import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setPage } from '../../../redux/slices/filterSlice';
 import styles from './Pagination.module.scss';
 
-export const Pagination = () => {
-  const { total, limit } = useSelector((state) => state.product);
-  const { page } = useSelector((state) => state.filter);
+export const Pagination: React.FC = () => {
+  const { total, limit } = useSelector((state: any) => state.product);
+  const { page } = useSelector((state: any) => state.filter);
   const pages = Math.ceil(total / limit);
 
   const dispatch = useDispatch();
 
-  const changePage = (page) => {
+  const changePage = (page: number) => {
     dispatch(setPage(page));
   };
 
@@ -26,7 +27,6 @@ export const Pagination = () => {
         pageCount={pages}
         forcePage={page - 1}
         previousLabel="<"
-        renderOnZeroPageCount={null}
       />
     </>
   );

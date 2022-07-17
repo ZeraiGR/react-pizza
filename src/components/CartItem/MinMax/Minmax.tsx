@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const Minmax = ({ id, counter, onPlus, onMinus }) => {
+type MinmaxProps = { id: string; counter: number; onPlus: any; onMinus: any };
+
+export const Minmax: React.FC<MinmaxProps> = ({ id, counter, onPlus, onMinus }) => {
   return (
     <div className="cart__item-count">
       <button

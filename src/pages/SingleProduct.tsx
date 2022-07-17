@@ -4,11 +4,15 @@ import { useDispatch } from 'react-redux';
 
 import { fetchItem } from '../redux/slices/productSlice';
 
-export const SIngleProduct = () => {
+export const SingleProduct: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [product, setProduct] = React.useState({});
+  const [product, setProduct] = React.useState<{
+    title: string;
+    imageUrl: string;
+    price: number;
+  }>();
 
   const handleError = () => {
     window.alert('Произошла ошибка при получении данных!');
@@ -18,6 +22,7 @@ export const SIngleProduct = () => {
   React.useEffect(() => {
     const getItem = async () => {
       try {
+        // @ts-ignore
         const { payload } = await dispatch(fetchItem(id));
         if (payload) {
           setProduct(payload);
@@ -31,7 +36,7 @@ export const SIngleProduct = () => {
     getItem();
   }, []);
 
-  if (Object.keys(product).length == 0) {
+  if (!product) {
     return <div>Загрузка...</div>;
   }
 
