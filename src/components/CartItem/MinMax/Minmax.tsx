@@ -1,6 +1,11 @@
 import React from 'react';
 
-type MinmaxProps = { id: string; counter: number; onPlus: any; onMinus: any };
+type MinmaxProps = {
+  id: string;
+  counter: number;
+  onPlus: (id: string) => void;
+  onMinus: (id: string) => void;
+};
 
 export const Minmax: React.FC<MinmaxProps> = ({ id, counter, onPlus, onMinus }) => {
   return (

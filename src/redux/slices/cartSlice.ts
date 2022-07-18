@@ -1,10 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+export type CartItem = {
+  id: string;
+  title: string;
+  img: string;
+  price: number;
+  type: string;
+  size: number;
+  counter: number;
+};
+
+interface cartSliceState {
+  items: CartItem[];
+}
+
+const initialState: cartSliceState = {
   items: [],
 };
 
-const getCurrentItem = (state, action) => {
+const getCurrentItem = (state: cartSliceState, action: PayloadAction<string>) => {
   return state.items.find((obj) => obj.id === action.payload);
 };
 
@@ -12,7 +26,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    add(state, action) {
+    add(state, action: PayloadAction<CartItem>) {
       const item = state.items.find((obj) => obj.id === action.payload.id);
       if (item) {
         item.counter++;
@@ -23,18 +37,18 @@ const cartSlice = createSlice({
         });
       }
     },
-    remove(state, action) {
+    remove(state, action: PayloadAction<string>) {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
     },
-    plus(state, action) {
+    plus(state, action: PayloadAction<string>) {
       const item = getCurrentItem(state, action);
       if (item) {
         item.counter++;
       }
     },
-    minus(state, action) {
+    minus(state, action: PayloadAction<string>) {
       const item = getCurrentItem(state, action);
-      if (item.counter > 1) {
+      if (item && item.counter > 1) {
         item.counter--;
       }
     },

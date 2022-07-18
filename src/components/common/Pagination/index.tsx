@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { useDispatch, useSelector } from 'react-redux';
 
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { setPage } from '../../../redux/slices/filterSlice';
 import styles from './Pagination.module.scss';
 
 export const Pagination: React.FC = () => {
-  const { total, limit } = useSelector((state: any) => state.product);
-  const { page } = useSelector((state: any) => state.filter);
+  const dispatch = useAppDispatch();
+  const { total } = useAppSelector((state) => state.product);
+  const { page, limit } = useAppSelector((state) => state.filter);
   const pages = Math.ceil(total / limit);
-
-  const dispatch = useDispatch();
 
   const changePage = (page: number) => {
     dispatch(setPage(page));

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import qs from 'qs';
 
@@ -12,17 +11,18 @@ import { sortList } from '../components/Sort/Sort';
 import { ErrorProducts } from '../components/NotFoundBlock/ErrorProducts';
 
 import { fetchItems } from '../redux/slices/productSlice';
-import { setFilters } from '../redux/slices/filterSlice';
+import { FilterSliceState, setFilters } from '../redux/slices/filterSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 export const Home: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
-  const { categoryId, sort, search, page } = useSelector((state: any) => state.filter);
-  const { limit, items, status } = useSelector((state: any) => state.product);
+  const { categoryId, sort, search, page, limit } = useAppSelector((state) => state.filter);
+  const { items, status } = useAppSelector((state) => state.product);
 
   const sortType = sort.sortProp;
 
@@ -31,8 +31,15 @@ export const Home: React.FC = () => {
     if (location.search) {
       const params = qs.parse(location.search.slice(1));
       const sort = sortList.find((obj) => obj.sortProp === params.sortType);
+      const sortable = sort || sortList[0];
 
-      dispatch(setFilters({ ...params, sort }));
+      dispatch(
+        setFilters({
+          categoryId: params.categoryId,
+          sort: sortable,
+          page: params.page,
+        } as unknown as FilterSliceState),
+      );
       isSearch.current = true;
     }
   }, []);
@@ -50,9 +57,9 @@ export const Home: React.FC = () => {
   React.useEffect(() => {
     if (isMounted.current) {
       const params = {
-        categoryId,
+        categoryId: String(categoryId),
         sortType,
-        page,
+        page: String(page),
       };
 
       console.log('Вшиваем параметры!');
@@ -60,16 +67,15 @@ export const Home: React.FC = () => {
     }
 
     isMounted.current = true;
-  }, [categoryId, sortType, search, page]);
+  }, [categoryId, sortType, search, page, setSearchParams]);
 
   React.useEffect(() => {
     if (!isSearch.current) {
       console.log(' запрос за пиццами!');
       dispatch(
-        // @ts-ignore
         fetchItems({
           categoryId,
-          sortType,
+          sort,
           search,
           page,
           limit,
@@ -78,7 +84,7 @@ export const Home: React.FC = () => {
     }
 
     isSearch.current = false;
-  }, [categoryId, sortType, search, page]);
+  }, [categoryId, sort, search, page, limit, dispatch]);
 
   return (
     <div className="container">

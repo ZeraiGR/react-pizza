@@ -1,26 +1,21 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
-import { setSort } from '../../redux/slices/filterSlice';
-
-type SortItem = {
-  name: string;
-  sortProp: string;
-};
+import { setSort, SortItem, SortProp } from '../../redux/slices/filterSlice';
 
 export const sortList: SortItem[] = [
-  { name: 'цене (возрастающая)', sortProp: 'price' },
-  { name: 'цене (убывающая)', sortProp: '-price' },
-  { name: 'популярности', sortProp: '-rating' },
-  { name: 'алфавиту', sortProp: 'title' },
+  { name: 'цене (возрастающая)', sortProp: SortProp.PRICE_ASK },
+  { name: 'цене (убывающая)', sortProp: SortProp.PRICE_DESK },
+  { name: 'популярности', sortProp: SortProp.RATING_DESK },
+  { name: 'алфавиту', sortProp: SortProp.TITLE_ASK },
 ];
 
 export const Sort: React.FC = React.memo(() => {
+  const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
   const sortPopup = React.useRef(null);
-  const dispatch = useDispatch();
-  const sort = useSelector((state: any) => state.filter.sort);
+  const sort = useAppSelector((state) => state.filter.sort);
 
   useOnClickOutside(sortPopup, () => setOpen(false));
 

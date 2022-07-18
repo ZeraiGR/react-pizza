@@ -12,9 +12,12 @@ export const API = {
     const searching = search ? `&search=${search}` : '';
     const pagination = `&page=${page}&limit=${limit}`;
 
-    return instance
-      .get(`items?sortBy=${sortBy}&order=${order}${category}${searching}${pagination}`)
-      .then((res) => res.data);
+    return (
+      instance.get(
+      `items?sortBy=${sortBy}&order=${order}${category}${searching}${pagination}`).then(
+        (res) => res.data,
+      )
+    );
   },
   getItem(id) {
     return instance.get(`items/${id}`).then((res) => res.data);

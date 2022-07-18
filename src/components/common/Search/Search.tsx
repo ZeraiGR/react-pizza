@@ -1,12 +1,12 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import debounce from 'lodash.debounce';
 
+import { useAppDispatch } from '../../../hooks/hooks';
 import styles from './Search.module.scss';
 import { setSearch } from '../../../redux/slices/filterSlice';
 
 export const Search: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [value, setValue] = React.useState('');
 
