@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getItemsFromLC } from '../../utils/getItemsFromLC';
 
 export type CartItem = {
   id: string;
@@ -15,7 +16,7 @@ interface cartSliceState {
 }
 
 const initialState: cartSliceState = {
-  items: [],
+  items: getItemsFromLC(),
 };
 
 const getCurrentItem = (state: cartSliceState, action: PayloadAction<string>) => {
