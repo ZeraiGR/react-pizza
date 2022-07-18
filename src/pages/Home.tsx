@@ -2,13 +2,15 @@ import React from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import qs from 'qs';
 
-import { Categories } from '../components/Categories/Categories';
-import { Sort } from '../components/Sort/Sort';
-import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
-import { PizzaSkelet } from '../components/PizzaBlock/PizzaSkelet';
-import { Pagination } from '../components/common/Pagination';
-import { sortList } from '../components/Sort/Sort';
-import { ErrorProducts } from '../components/NotFoundBlock/ErrorProducts';
+import {
+  Categories,
+  Sort,
+  PizzaBlock,
+  PizzaSkelet,
+  Pagination,
+  ErrorProducts,
+  sortList,
+} from '../components';
 
 import { fetchItems } from '../redux/slices/productSlice';
 import { FilterSliceState, setFilters } from '../redux/slices/filterSlice';

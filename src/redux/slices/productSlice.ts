@@ -11,12 +11,12 @@ enum FetchStatus {
 export type Product = {
   id: string;
   categoryId: number;
-  img: string;
+  imageUrl: string;
   title: string;
   types: number[];
   sizes: number[];
   rating: number;
-	price: number;
+  price: number;
 };
 
 interface ProductSliceState {

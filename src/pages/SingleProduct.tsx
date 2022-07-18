@@ -41,7 +41,7 @@ export const SingleProduct: React.FC = () => {
   return (
     <div className="container">
       <h2>{product.title}</h2>
-      <img src={product.img} alt={product.title} />
+      <img src={product.imageUrl} alt={product.title} />
       <p>{product.price} ₽</p>
     </div>
   );
