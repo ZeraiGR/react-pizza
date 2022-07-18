@@ -1,16 +1,17 @@
 import React from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { setCategoryId } from '../../redux/slices/filterSlice';
 
 type cartArr = string[];
-
 const cats: cartArr = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-export const Categories: React.FC = () => {
-  const dispatch = useAppDispatch();
+type CategoriesProps = {
+  categoryId: number;
+};
 
-  const categoryId = useAppSelector((state) => state.filter.categoryId);
+export const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId }) => {
+  const dispatch = useAppDispatch();
 
   const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id));
@@ -30,4 +31,4 @@ export const Categories: React.FC = () => {
       </ul>
     </div>
   );
-};
+});
